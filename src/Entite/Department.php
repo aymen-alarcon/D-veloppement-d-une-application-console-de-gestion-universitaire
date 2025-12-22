@@ -1,5 +1,5 @@
 <?php
-    class Course{
+    class Department{
         public $conn;
         protected $id;
         protected $name;
