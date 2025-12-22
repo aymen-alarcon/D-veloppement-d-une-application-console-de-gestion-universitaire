@@ -13,8 +13,13 @@
         function getId(){
             return $this->id;
         }
+
         function getName(){
             return $this->name;
+        }
+
+        function setName($name){
+            $this->name = $name;
         }
     }
 ?>

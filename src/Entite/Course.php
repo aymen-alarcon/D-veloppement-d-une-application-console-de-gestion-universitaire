@@ -17,14 +17,28 @@
         function getId(){
             return $this->id;
         }
+
         function getEmail(){
             return $this->email;
+        }
+
+        function setEmail(string $email){
+            $this->email = $email;
         }
         function getPassword(){
             return $this->password;
         }
+
+        function setPassword(string $password){
+            $this->password = $password;
+        }
+
         function getRole(){
             return $this->role;
         }
+
+        function setRole(string $role){
+            $this->role = $role;
+        }        
     }
 ?>

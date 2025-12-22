@@ -19,16 +19,37 @@
         function getId(){
             return $this->id;
         }
+        
         function getEmail(){
             return $this->email;
         }
+        
         function getPassword(){
             return $this->password;
         }
+        
         function getFirstName(){
             return $this->firstName;
         }
+        
         function getLastName(){
             return $this->lastName;
         }
+        
+        function setEmail($email){
+            $this->email = $email;
+        }
+        
+        function setPassword($password){
+            $this->password = $password;
+        }
+        
+        function setFirstName($firstName){
+            $this->firstName = $firstName;
+        }
+        
+        function setLastName($lastName){
+            $this->lastName = $lastName;
+        }
     }
+?>
