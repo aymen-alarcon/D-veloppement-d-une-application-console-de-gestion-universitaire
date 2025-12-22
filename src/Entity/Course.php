@@ -1,13 +1,11 @@
 <?php
     class Course{
-        public $conn;
         protected $id;
         protected $email;
         protected $password;
         protected $role;
 
-        function __construct($conn, $id, $email, $password, $role){
-            $this->conn = $conn;
+        function __construct($id, $email, $password, $role){
             $this->id = $id;
             $this->email = $email;
             $this->password = $password;
