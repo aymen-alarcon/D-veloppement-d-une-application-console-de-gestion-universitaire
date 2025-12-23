@@ -1,6 +1,9 @@
 <?php
+    require "Interface/CrudInterface.php";
     require "Repository/UserRepository.php";
+    require "Repository/StudentRepository.php";
     require "Entity/User.php";
+    require "Entity/Student.php";
     require "Database/DatabaseConnection.php";
 
     $connection = new DatabaseConnection();
@@ -24,7 +27,7 @@
     }
 
     if ($user->getRole() == 'admin') {
-        echo "=== University Management CLI ===\n\n";
+        echo "=== University Management ===\n\n";
         echo "Select an entity to manage:\n";
         echo "1. Departments\n";
         echo "2. Courses\n";
@@ -43,8 +46,16 @@
                 echo "Choose an option: ";
                 $subOption = fgets(STDIN);    
                 switch ($subOption) {
-                    case 'value':
-                        # code...
+                    case '1':
+
+                        break;
+                    case '2':
+                        break;
+                    case '3':
+                        break;
+                    case '4':
+                        break;
+                    case '5':
                         break;
                     
                     default:
@@ -62,8 +73,15 @@
                 echo "Choose an option: ";
                 $subOption = fgets(STDIN);  
                 switch ($subOption) {
-                    case 'value':
-                        # code...
+                    case '1':
+                        break;
+                    case '2':
+                        break;
+                    case '3':
+                        break;
+                    case '4':
+                        break;
+                    case '5':
                         break;
                     
                     default:
@@ -82,8 +100,15 @@
                 echo "Choose an option: ";
                 $subOption = fgets(STDIN);   
                 switch ($subOption) {
-                    case 'value':
-                        # code...
+                    case '1':
+                        break;
+                    case '2':
+                        break;
+                    case '3':
+                        break;
+                    case '4':
+                        break;
+                    case '5':
                         break;
                     
                     default:
@@ -101,9 +126,45 @@
                 echo "6. List Courses for a Student\n";
                 echo "0. Go Back\n\n";
                 echo "Choose an option: ";
+                $subOption = fgets(STDIN);
                 switch ($subOption) {
-                    case 'value':
-                        # code...
+                    case '1':
+                        echo "\n=== Create Student Menu ===\n";
+                        echo "Enter Students First Name: \n";
+                        $firstName = trim(fgets(STDIN));
+                        echo "Enter Students Last Name: \n";
+                        $lastName = trim(fgets(STDIN));
+                        echo "Enter Students email: \n";
+                        $email = trim(fgets(STDIN));
+                        $students = new StudentRepository($conn);
+                        $data = []; 
+                        array_push($data, $firstName, $lastName, $email);
+                        $user = $students->create($data);
+                        echo "0. Go Back\n\n";
+                        break;
+                    case '2':
+                        break;
+                    case '3':
+                        // $students = new StudentRepository($conn);
+                        // $user = $students->createStudent($firstName, $lastName, $email);
+                        echo "\n=== Update Student Menu ===\n";
+                        echo "Enter Students email: \n";
+                        $id = trim(fgets(STDIN));
+                        echo "Enter Students First Name: \n";
+                        $firstName = trim(fgets(STDIN));
+                        echo "Enter Students Last Name: \n";
+                        $lastName = trim(fgets(STDIN));
+                        echo "Enter Students email: \n";
+                        $email = trim(fgets(STDIN));
+                        $students = new StudentRepository($conn);
+                        $data = []; 
+                        array_push($data, $id, $firstName, $lastName, $email);
+                        $user = $students->update($data);
+                        echo "0. Go Back\n\n";
+                        break;
+                    case '4':
+                        break;
+                    case '5':
                         break;
                     
                     default:

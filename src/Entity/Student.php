@@ -8,10 +8,9 @@
         protected $department_id;
         protected $course_id; 
 
-        function __construct($id, $email, $password, $firstName, $lastName, $course_id, $department_id){
+        function __construct($id, $email, $firstName, $lastName, $course_id, $department_id){
             $this->id = $id;
             $this->email = $email;
-            $this->password = $password;
             $this->firstName = $firstName;
             $this->lastName = $lastName;
             $this->department_id = $department_id;
@@ -25,11 +24,7 @@
         function getEmail(){
             return $this->email;
         }
-        
-        function getPassword(){
-            return $this->password;
-        }
-        
+                
         function getFirstName(){
             return $this->firstName;
         }
@@ -48,10 +43,6 @@
         
         function setEmail($email){
             $this->email = $email;
-        }
-        
-        function setPassword($password){
-            $this->password = $password;
         }
         
         function setFirstName($firstName){

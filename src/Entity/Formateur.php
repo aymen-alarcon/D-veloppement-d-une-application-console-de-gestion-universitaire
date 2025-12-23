@@ -6,10 +6,9 @@
         protected $firstName;
         protected $lastName;
 
-        function __construct($id, $email, $password, $firstName, $lastName){
+        function __construct($id, $email, $firstName, $lastName){
             $this->id = $id;
             $this->email = $email;
-            $this->password = $password;
             $this->firstName = $firstName;
             $this->lastName = $lastName;
         }
@@ -22,10 +21,6 @@
             return $this->email;
         }
         
-        function getPassword(){
-            return $this->password;
-        }
-        
         function getFirstName(){
             return $this->firstName;
         }
@@ -36,10 +31,6 @@
         
         function setEmail($email){
             $this->email = $email;
-        }
-        
-        function setPassword($password){
-            $this->password = $password;
         }
         
         function setFirstName($firstName){
