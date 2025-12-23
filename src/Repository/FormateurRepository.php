@@ -2,6 +2,7 @@
 
 class FormateurRepository implements CrudInterface{
         private $conn;
+        private $table = "formateurs";
 
         function __construct($conn)
         {
@@ -9,7 +10,7 @@ class FormateurRepository implements CrudInterface{
         }
 
         function create($data){
-            $sql = "INSERT INTO formateurs (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
+            $sql = "INSERT INTO {$this->table} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(":first_name", $data[0]);
             $stmt->bindParam(":last_name", $data[1]);
@@ -19,7 +20,7 @@ class FormateurRepository implements CrudInterface{
         }
 
         function update($data){
-            $sql = "UPDATE formateurs SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
+            $sql = "UPDATE {$this->table} SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(":id", $data[0]);
             $stmt->bindParam(":first_name", $data[1]);
@@ -29,16 +30,15 @@ class FormateurRepository implements CrudInterface{
         }
 
         function read($condition){
-            $sql = "SELECT $condition FROM formateurs";
+            $sql = "SELECT $condition FROM {$this->table}";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
         }
 
-        function delete($condition)
-        {
-            $sql = "DELETE FROM formateurs WHERE $condition";
+        function delete($condition){
+            $sql = "DELETE FROM {$this->table} WHERE $condition";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);

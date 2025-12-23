@@ -31,7 +31,6 @@ if (!$user) {
     echo "Invalid credentials.\n";
     exit;
 }
-
 if ($user->getRole() === 'admin') {
 
     while (true) {
@@ -63,28 +62,28 @@ if ($user->getRole() === 'admin') {
                         case '1':
                             echo "Enter Department Name: ";
                             $name = trim(fgets(STDIN));
-                            $departments->create([$name]);
-                            break;
+                            $departments->create($name, "departments");
+                            break 2;
 
                         case '2':
-                            print_r($departments->read("id, name"));
-                            break;
+                            print_r($departments->read("id, name", "departments"));
+                            break 2;
 
                         case '3':
-                            print_r($departments->read("id, name"));
+                            print_r($departments->read("id, name", "departments"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
                             echo "Enter Name: ";
                             $name = trim(fgets(STDIN));
-                            $departments->update([$id, $name]);
-                            break;
+                            $departments->update([$id, $name], "departments");
+                            break 2;
 
                         case '4':
-                            print_r($departments->read("id, name"));
+                            print_r($departments->read("id, name", "departments"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
-                            $departments->delete("id = $id");
-                            break;
+                            $departments->delete("id = $id", "departments");
+                            break 2;
 
                         case '0':
                             break 2;
@@ -112,36 +111,36 @@ if ($user->getRole() === 'admin') {
                             echo "Enter Course Name: ";
                             $name = trim(fgets(STDIN));
 
-                            print_r($departments->read("id, name"));
+                            print_r($departments->read("id, name", "departments"));
                             echo "Enter Department ID: ";
                             $departmentId = trim(fgets(STDIN));
 
-                            print_r($formateurs->read("id, first_name, last_name"));
+                            print_r($formateurs->read("id, first_name, last_name", "formateurs"));
                             echo "Enter Formateur ID: ";
                             $formateurId = trim(fgets(STDIN));
 
-                            $courses->create([$name, $departmentId, $formateurId]);
-                            break;
+                            $courses->create([$name, $departmentId, $formateurId], "courses");
+                            break 2;
 
                         case '2':
-                            print_r($courses->read("id, name"));
-                            break;
+                            print_r($courses->read("id, name", "courses"));
+                            break 2;
 
                         case '3':
-                            print_r($courses->read("id, name"));
+                            print_r($courses->read("id, name", "courses"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
                             echo "Enter Name: ";
                             $name = trim(fgets(STDIN));
-                            $courses->update([$id, $name]);
-                            break;
+                            $courses->update([$id, $name], "courses");
+                            break 2;
 
                         case '4':
-                            print_r($courses->read("id, name"));
+                            print_r($courses->read("id, name", "courses"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
-                            $courses->delete("id = $id");
-                            break;
+                            $courses->delete("id = $id", "courses");
+                            break 2;
 
                         case '0':
                             break 2;
@@ -172,15 +171,15 @@ if ($user->getRole() === 'admin') {
                             $lastName = trim(fgets(STDIN));
                             echo "Email: ";
                             $email = trim(fgets(STDIN));
-                            $formateurs->create([$firstName, $lastName, $email]);
-                            break;
+                            $formateurs->create([$firstName, $lastName, $email], "formateurs");
+                            break 2;
 
                         case '2':
-                            print_r($formateurs->read("id, first_name, last_name"));
-                            break;
+                            print_r($formateurs->read("id, first_name, last_name", "formateurs"));
+                            break 2;
 
                         case '3':
-                            print_r($formateurs->read("id, first_name, last_name"));
+                            print_r($formateurs->read("id, first_name, last_name", "formateurs"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
                             echo "First Name: ";
@@ -189,15 +188,15 @@ if ($user->getRole() === 'admin') {
                             $lastName = trim(fgets(STDIN));
                             echo "Email: ";
                             $email = trim(fgets(STDIN));
-                            $formateurs->update([$id, $firstName, $lastName, $email]);
-                            break;
+                            $formateurs->update([$id, $firstName, $lastName, $email], "formateurs");
+                            break 2;
 
                         case '4':
-                            print_r($formateurs->read("id, first_name, last_name"));
+                            print_r($formateurs->read("id, first_name, last_name", "formateurs"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
-                            $formateurs->delete("id = $id");
-                            break;
+                            $formateurs->delete("id = $id", "formateurs");
+                            break 2;
 
                         case '0':
                             break 2;
@@ -228,15 +227,15 @@ if ($user->getRole() === 'admin') {
                             $lastName = trim(fgets(STDIN));
                             echo "Email: ";
                             $email = trim(fgets(STDIN));
-                            $students->create([$firstName, $lastName, $email]);
-                            break;
+                            $students->create([$firstName, $lastName, $email], "students");
+                            break 2;
 
                         case '2':
-                            print_r($students->read("id, first_name, last_name"));
-                            break;
+                            print_r($students->read("id, first_name, last_name", "students"));
+                            break 2;
 
                         case '3':
-                            print_r($students->read("id, first_name, last_name"));
+                            print_r($students->read("id, first_name, last_name", "students"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
                             echo "First Name: ";
@@ -245,15 +244,15 @@ if ($user->getRole() === 'admin') {
                             $lastName = trim(fgets(STDIN));
                             echo "Email: ";
                             $email = trim(fgets(STDIN));
-                            $students->update([$id, $firstName, $lastName, $email]);
-                            break;
+                            $students->update([$id, $firstName, $lastName, $email], "students");
+                            break 2;
 
                         case '4':
-                            print_r($students->read("id, first_name, last_name"));
+                            print_r($students->read("id, first_name, last_name", "students"));
                             echo "Enter ID: ";
                             $id = trim(fgets(STDIN));
-                            $students->delete("id = $id");
-                            break;
+                            $students->delete("id = $id", "students");
+                            break 2;
 
                         case '0':
                             break 2;
