@@ -18,9 +18,9 @@
 
     echo "Enter your password: ";
     $password = trim(fgets(STDIN));
-    $course = new CourseRepository($conn);
+    $courses = new CourseRepository($conn);
     $departments = new DepartmentRepository($conn);
-    $formateur = new FormateurRepository($conn);
+    $formateurs = new FormateurRepository($conn);
     $students = new StudentRepository($conn);
     $service = new UserRepository($conn);
     $user = $service->login($email, $password);
@@ -53,27 +53,43 @@
                 $subOption = fgets(STDIN);    
                 switch ($subOption) {
                     case '1':
-                            echo "\n=== Create Departments Menu ===\n";
-                            echo "Enter Departments  Name: \n";
-                            $name = trim(fgets(STDIN));
-                            $data = []; 
-                            array_push($data, $name);
-                            $user = $departments->create($data);
-                            echo "0. Go Back\n\n";
+                        echo "\n=== Create Departments Menu ===\n";
+                        echo "Enter Departments  Name: \n";
+                        $name = trim(fgets(STDIN));
+                        $data = []; 
+                        array_push($data, $name);
+                        $user = $departments->create($data);
+                        echo "0. Go Back\n\n";
+                    break;
                     case '2':
-                            echo "Enter the course's department id: \n";
-                            print_r($departments->read("id, name")); 
-                        break;
+                        echo "Enter the course's department id: \n";
+                        print_r($departments->read("id, name")); 
+                    break;
                     case '3':
-                        break;
+                        echo "\n=== Update Department Menu ===\n";
+                        echo "Enter the Departments's id: \n";
+                        print_r($departments->read("id, name")); 
+                        echo "Enter Departments email: \n";
+                        $id = trim(fgets(STDIN));
+                        echo "Enter Departments Name: \n";
+                        $name = trim(fgets(STDIN));
+                        $data = []; 
+                        array_push($data, $id, $name);
+                        $user = $departments->update($data);
+                        echo "0. Go Back\n\n";
+                    break;
                     case '4':
-                        break;
-                    case '5':
-                        break;
-                    
+                        echo "\n=== Delete Departments Menu ===\n";
+                        echo "Enter the department's id: \n";
+                        print_r($departments->read("id, name")); 
+                        echo "Enter Departments id: \n";
+                        $id = trim(fgets(STDIN));
+                        $user = $departments->delete("id = ". $id);
+                        echo "0. Go Back\n\n";
+                    break;                    
                     default:
                         # code...
-                        break;
+                    break;
                 }
             break;
             case '2':
@@ -106,15 +122,30 @@
                             print_r($course->read("id, name")); 
                         break;
                     case '3':
+                        echo "\n=== Update Course Menu ===\n";
+                        echo "Enter the Courses's id: \n";
+                        print_r($courses->read("id, name")); 
+                        echo "Enter Courses id: \n";
+                        $id = trim(fgets(STDIN));
+                        echo "Enter Courses Name: \n";
+                        $name = trim(fgets(STDIN));
+                        $data = []; 
+                        array_push($data, $id, $name);
+                        $user = $courses->update($data);
+                        echo "0. Go Back\n\n";
                         break;
                     case '4':
-                        break;
-                    case '5':
-                        break;
-                    
+                        echo "\n=== Delete courses Menu ===\n";
+                        echo "Enter the course's department id: \n";
+                        print_r($courses->read("id, name")); 
+                        echo "Enter course id: \n";
+                        $id = trim(fgets(STDIN));
+                        $user = $courses->delete("id = ". $id);
+                        echo "0. Go Back\n\n";
+                    break;                    
                     default:
                         # code...
-                        break;
+                    break;
                 }
             break;
             case '3':
@@ -138,25 +169,47 @@
                         $email = trim(fgets(STDIN));
                         $data = []; 
                         array_push($data, $firstName, $lastName, $email);
-                        $user = $formateur->create($data);
+                        $user = $formateurs->create($data);
                         echo "0. Go Back\n\n";
-                        break;
+                    break;
                     case '2':
                         echo "\n=== List of Formateur ===\n";
-                        print_r($formateur->read("id, first_name, last_name")); 
-                        break;
+                        print_r($formateurs->read("id, first_name, last_name")); 
+                    break;
                     case '3':
-                        break;
+                        echo "\n=== Update Formateur Menu ===\n";
+                        echo "Enter the Formateur's id: \n";
+                        print_r($formateurs->read("id, first_name, last_name")); 
+                        echo "Enter Formateurs email: \n";
+                        $id = trim(fgets(STDIN));
+                        echo "Enter Formateur First Name: \n";
+                        $firstName = trim(fgets(STDIN));
+                        echo "Enter Formateur Last Name: \n";
+                        $lastName = trim(fgets(STDIN));
+                        echo "Enter Formateur email: \n";
+                        $email = trim(fgets(STDIN));
+                        $data = []; 
+                        array_push($data, $id, $firstName, $lastName, $email);
+                        $user = $formateurs->update($data);
+                        echo "0. Go Back\n\n";
+                    break;
                     case '4':
-                        break;
+                        echo "\n=== Delete formateur Menu ===\n";
+                        echo "Enter the formateur's id: \n";
+                        print_r($formateurs->read("id, first_name, last_name")); 
+                        echo "Enter formateur id: \n";
+                        $id = trim(fgets(STDIN));
+                        $user = $formateurs->delete("id = ". $id);
+                        echo "0. Go Back\n\n";
+                    break;
                     case '5':
-                        break;
+                    break;
                     case '0':
-                        break;
+                    break;
                     
                     default:
                         # code...
-                        break;
+                    break;
                 }
             break;
             case '4':
@@ -165,7 +218,7 @@
                 echo "2. List Students by Department\n";
                 echo "3. Update Student\n";
                 echo "4. Delete Student\n";
-                echo "5. Assign Student to Department\n";
+                echo "5. Assign Student to Course\n";
                 echo "6. List Courses for a Student\n";
                 echo "0. Go Back\n\n";
                 echo "Choose an option: ";
@@ -183,13 +236,15 @@
                         array_push($data, $firstName, $lastName, $email);
                         $user = $students->create($data);
                         echo "0. Go Back\n\n";
-                        break;
+                    break;
                     case '2':
-                            echo "\n=== List of Formateur ===\n";
-                            print_r($students->read("id, first_name, last_name")); 
-                        break;
+                        echo "\n=== List of Formateur ===\n";
+                        print_r($students->read("id, first_name, last_name")); 
+                    break;
                     case '3':
                         echo "\n=== Update Student Menu ===\n";
+                        echo "Enter the Students's id: \n";
+                        print_r($students->read("id, first_name, last_name")); 
                         echo "Enter Students email: \n";
                         $id = trim(fgets(STDIN));
                         echo "Enter Students First Name: \n";
@@ -198,20 +253,28 @@
                         $lastName = trim(fgets(STDIN));
                         echo "Enter Students email: \n";
                         $email = trim(fgets(STDIN));
-                        $students = new StudentRepository($conn);
                         $data = []; 
                         array_push($data, $id, $firstName, $lastName, $email);
                         $user = $students->update($data);
                         echo "0. Go Back\n\n";
-                        break;
+                    break;
                     case '4':
-                        break;
+                        echo "\n=== Delete Students Menu ===\n";
+                        echo "Enter the Students's id: \n";
+                        print_r($students->read("id, first_name, last_name")); 
+                        echo "Enter Students id: \n";
+                        $id = trim(fgets(STDIN));
+                        $user = $students->delete("id = ". $id);
+                        echo "0. Go Back\n\n";
+                    break;
                     case '5':
-                        break;
+                    break;
+                    case '6':
+                    break;
                     
                     default:
                         # code...
-                        break;
+                    break;
                 }
             break; 
             default:

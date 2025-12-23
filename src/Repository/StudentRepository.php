@@ -37,6 +37,10 @@
 
         function delete($condition)
         {
-
+            $sql = "DELETE FROM students WHERE $condition";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $users;
         }
     }
