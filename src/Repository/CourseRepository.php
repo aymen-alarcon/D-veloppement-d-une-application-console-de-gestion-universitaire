@@ -22,7 +22,7 @@ class CourseRepository{
             $sql = "SELECT $condition FROM courses";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
-            $users = $stmt->fetch(PDO::FETCH_ASSOC);
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
         }
 

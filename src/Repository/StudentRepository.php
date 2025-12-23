@@ -31,7 +31,7 @@
             $sql = "SELECT $condition FROM students";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
-            $users = $stmt->fetch(PDO::FETCH_ASSOC);
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
         }
 

@@ -18,7 +18,10 @@
 
     echo "Enter your password: ";
     $password = trim(fgets(STDIN));
-
+    $course = new CourseRepository($conn);
+    $departments = new DepartmentRepository($conn);
+    $formateur = new FormateurRepository($conn);
+    $students = new StudentRepository($conn);
     $service = new UserRepository($conn);
     $user = $service->login($email, $password);
 
@@ -53,12 +56,13 @@
                             echo "\n=== Create Departments Menu ===\n";
                             echo "Enter Departments  Name: \n";
                             $name = trim(fgets(STDIN));
-                            $departments = new DepartmentRepository($conn);
                             $data = []; 
                             array_push($data, $name);
                             $user = $departments->create($data);
                             echo "0. Go Back\n\n";
                     case '2':
+                            echo "Enter the course's department id: \n";
+                            print_r($departments->read("id, name")); 
                         break;
                     case '3':
                         break;
@@ -83,13 +87,11 @@
                 $subOption = fgets(STDIN);  
                 switch ($subOption) {
                     case '1':
-                            $course = new CourseRepository($conn);
-                            $formateur = new FormateurRepository($conn);
                             echo "\n=== Create Course Menu ===\n";
                             echo "Enter Course  Name: \n";
                             $name = trim(fgets(STDIN));
                             echo "Enter the course's department id: \n";
-                            print_r($course->read("id, name")); 
+                            print_r($departments->read("id, name")); 
                             $department = trim(fgets(STDIN));
                             echo "Enter the formateur's id that will teach this course Name: \n";
                             print_r($formateur->read("id, first_name, last_name")); 
@@ -100,6 +102,8 @@
                             echo "0. Go Back\n\n";
                         break;
                     case '2':
+                            echo "Enter the course's department id: \n";
+                            print_r($course->read("id, name")); 
                         break;
                     case '3':
                         break;
@@ -132,19 +136,22 @@
                         $lastName = trim(fgets(STDIN));
                         echo "Enter Formateur email: \n";
                         $email = trim(fgets(STDIN));
-                        $formateur = new FormateurRepository($conn);
                         $data = []; 
                         array_push($data, $firstName, $lastName, $email);
                         $user = $formateur->create($data);
                         echo "0. Go Back\n\n";
                         break;
                     case '2':
+                        echo "\n=== List of Formateur ===\n";
+                        print_r($formateur->read("id, first_name, last_name")); 
                         break;
                     case '3':
                         break;
                     case '4':
                         break;
                     case '5':
+                        break;
+                    case '0':
                         break;
                     
                     default:
@@ -172,17 +179,16 @@
                         $lastName = trim(fgets(STDIN));
                         echo "Enter Students email: \n";
                         $email = trim(fgets(STDIN));
-                        $students = new StudentRepository($conn);
                         $data = []; 
                         array_push($data, $firstName, $lastName, $email);
                         $user = $students->create($data);
                         echo "0. Go Back\n\n";
                         break;
                     case '2':
+                            echo "\n=== List of Formateur ===\n";
+                            print_r($students->read("id, first_name, last_name")); 
                         break;
                     case '3':
-                        // $students = new StudentRepository($conn);
-                        // $user = $students->createStudent($firstName, $lastName, $email);
                         echo "\n=== Update Student Menu ===\n";
                         echo "Enter Students email: \n";
                         $id = trim(fgets(STDIN));
