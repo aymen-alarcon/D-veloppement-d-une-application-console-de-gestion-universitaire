@@ -1,29 +1,29 @@
-<?php 
-
-class CourseRepository implements CrudInterface{
+<?php
+    class StudentRepository implements CrudInterface{
         private $conn;
-        private $table = "courses";
-
+        private $table = "students";
         function __construct($conn)
         {
             $this->conn = $conn;
         }
 
         function create($data){
-            $sql = "INSERT INTO {$this->table} (name, department_id, formateur_id, created_at) VALUES (:name, :department_id, :formateur_id, NOW())";
+            $sql = "INSERT INTO {$this->table} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":name", $data["name"]);
-            $stmt->bindParam(":department_id", $data["department_id"]);
-            $stmt->bindParam(":formateur_id", $data["formateur_id"]);
+            $stmt->bindParam(":first_name", $data["first_name"]);
+            $stmt->bindParam(":last_name", $data["last_name"]);
+            $stmt->bindParam(":email", $data["email"]);
             $stmt->execute();
             return "Student has been created";
         }
 
         function update($data){
-            $sql = "UPDATE {$this->table} SET name = :name WHERE id = :id";
+            $sql = "UPDATE {$this->table}  SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data[0]);
-            $stmt->bindParam(":name", $data[1]);
+            $stmt->bindParam(":id", $data["id"]);
+            $stmt->bindParam(":first_name", $data["first_name"]);
+            $stmt->bindParam(":last_name", $data["last_name"]);
+            $stmt->bindParam(":email", $data["email"]);
             $stmt->execute();
         }
 
@@ -42,4 +42,4 @@ class CourseRepository implements CrudInterface{
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
         }
-}
+    }
