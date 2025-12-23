@@ -10,9 +10,9 @@
         function create($data){
             $sql = "INSERT INTO {$this->table} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":first_name", $data[0]);
-            $stmt->bindParam(":last_name", $data[1]);
-            $stmt->bindParam(":email", $data[2]);
+            $stmt->bindParam(":first_name", $data["first_name"]);
+            $stmt->bindParam(":last_name", $data["last_name"]);
+            $stmt->bindParam(":email", $data["email"]);
             $stmt->execute();
             return "Student has been created";
         }
@@ -20,10 +20,10 @@
         function update($data){
             $sql = "UPDATE {$this->table}  SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data[0]);
-            $stmt->bindParam(":first_name", $data[1]);
-            $stmt->bindParam(":last_name", $data[2]);
-            $stmt->bindParam(":email", $data[3]);
+            $stmt->bindParam(":id", $data["id"]);
+            $stmt->bindParam(":first_name", $data["first_name"]);
+            $stmt->bindParam(":last_name", $data["last_name"]);
+            $stmt->bindParam(":email", $data["email"]);
             $stmt->execute();
         }
 

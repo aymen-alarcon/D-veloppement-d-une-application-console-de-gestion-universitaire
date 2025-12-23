@@ -12,9 +12,9 @@ class CourseRepository implements CrudInterface{
         function create($data){
             $sql = "INSERT INTO {$this->table} (name, department_id, formateur_id, created_at) VALUES (:name, :department_id, :formateur_id, NOW())";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":name", $data[0]);
-            $stmt->bindParam(":department_id", $data[1]);
-            $stmt->bindParam(":formateur_id", $data[2]);
+            $stmt->bindParam(":name", $data["name"]);
+            $stmt->bindParam(":department_id", $data["department_id"]);
+            $stmt->bindParam(":formateur_id", $data["formateur_id"]);
             $stmt->execute();
             return "Student has been created";
         }
