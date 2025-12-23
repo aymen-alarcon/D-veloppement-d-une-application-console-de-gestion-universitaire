@@ -1,6 +1,6 @@
 <?php
 
-class FormateurRepository{
+class FormateurRepository implements CrudInterface{
         private $conn;
 
         function __construct($conn)

@@ -1,6 +1,6 @@
 <?php 
 
-class CourseRepository{
+class CourseRepository implements CrudInterface{
         private $conn;
 
         function __construct($conn)
