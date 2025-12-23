@@ -1,7 +1,10 @@
 <?php
     require "Interface/CrudInterface.php";
+    require "Repository/FormateurRepository.php";
     require "Repository/UserRepository.php";
     require "Repository/StudentRepository.php";
+    require "Repository/CourseRepository.php";
+    require "Repository/DepartmentRepository.php";
     require "Entity/User.php";
     require "Entity/Student.php";
     require "Database/DatabaseConnection.php";
@@ -47,8 +50,14 @@
                 $subOption = fgets(STDIN);    
                 switch ($subOption) {
                     case '1':
-
-                        break;
+                            echo "\n=== Create Departments Menu ===\n";
+                            echo "Enter Departments  Name: \n";
+                            $name = trim(fgets(STDIN));
+                            $departments = new DepartmentRepository($conn);
+                            $data = []; 
+                            array_push($data, $name);
+                            $user = $departments->create($data);
+                            echo "0. Go Back\n\n";
                     case '2':
                         break;
                     case '3':
@@ -74,6 +83,21 @@
                 $subOption = fgets(STDIN);  
                 switch ($subOption) {
                     case '1':
+                            $course = new CourseRepository($conn);
+                            $formateur = new FormateurRepository($conn);
+                            echo "\n=== Create Course Menu ===\n";
+                            echo "Enter Course  Name: \n";
+                            $name = trim(fgets(STDIN));
+                            echo "Enter the course's department id: \n";
+                            print_r($course->read("id, name")); 
+                            $department = trim(fgets(STDIN));
+                            echo "Enter the formateur's id that will teach this course Name: \n";
+                            print_r($formateur->read("id, first_name, last_name")); 
+                            $formateur = trim(fgets(STDIN));
+                            $data = []; 
+                            array_push($data, $name, $department, $formateur);
+                            $user = $course->create($data);
+                            echo "0. Go Back\n\n";
                         break;
                     case '2':
                         break;
@@ -101,6 +125,18 @@
                 $subOption = fgets(STDIN);   
                 switch ($subOption) {
                     case '1':
+                        echo "\n=== Create Formateur Menu ===\n";
+                        echo "Enter Formateur First Name: \n";
+                        $firstName = trim(fgets(STDIN));
+                        echo "Enter Formateur Last Name: \n";
+                        $lastName = trim(fgets(STDIN));
+                        echo "Enter Formateur email: \n";
+                        $email = trim(fgets(STDIN));
+                        $formateur = new FormateurRepository($conn);
+                        $data = []; 
+                        array_push($data, $firstName, $lastName, $email);
+                        $user = $formateur->create($data);
+                        echo "0. Go Back\n\n";
                         break;
                     case '2':
                         break;

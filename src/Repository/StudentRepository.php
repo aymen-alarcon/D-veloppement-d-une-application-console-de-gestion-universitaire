@@ -8,8 +8,6 @@
         }
 
         function create($data){
-            $values = implode(",", $data);
-            echo $values;
             $sql = "INSERT INTO students (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(":first_name", $data[0]);
@@ -29,12 +27,16 @@
             $stmt->execute();
         }
 
-        function read($id){
-
+        function read($condition){
+            $sql = "SELECT $condition FROM students";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $users = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $users;
         }
 
-        function delete($id)
+        function delete($condition)
         {
-            
+
         }
     }
