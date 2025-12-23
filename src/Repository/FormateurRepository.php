@@ -44,4 +44,12 @@ class FormateurRepository implements CrudInterface{
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
         }
+        
+        function updateCourse($data){
+            $sql = "UPDATE {$this->table}  SET course_id = :course_id WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":id", $data["id"]);
+            $stmt->bindParam(":course_id", $data["course_id"]);
+            $stmt->execute();
+        }
 }

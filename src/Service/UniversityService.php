@@ -182,6 +182,7 @@
                 echo "2. List Formateurs\n";
                 echo "3. Update Formateur\n";
                 echo "4. Delete Formateur\n";
+                echo "5. Assign Formateur to Course\n";
                 echo "0. Back\n";
                 echo "Choose an option: ";
 
@@ -237,6 +238,17 @@
                         echo "Formateur deleted.\n";
                         break;
 
+                    case '5':
+                        print_r($this->formateurs->read("id, first_name, last_name"));
+                        echo "Enter formateur's ID: ";
+                        $id = trim(fgets(STDIN));
+                        print_r($this->courses->read("id, name"));
+                        echo "Enter course's ID: ";
+                        $courseId = trim(fgets(STDIN));
+                        $this->formateurs->updateCourse(["course_id" => $courseId, "id" => $id]);
+                        echo "formateur deleted.\n";
+                        break;
+
                     case '0':
                         return;
 
@@ -249,10 +261,12 @@
         private function studentMenu() {
             while (true) {
                 echo "\n=== students Menu ===\n";
-                echo "1. Create student\n";
-                echo "2. List students\n";
-                echo "3. Update student\n";
-                echo "4. Delete student\n";
+                echo "1. Create Student\n";
+                echo "2. List Students by Department\n";
+                echo "3. Update Student\n";
+                echo "4. Delete Student\n";
+                echo "5. Assign Student to Course\n";
+                echo "6. List Courses for a Student\n";
                 echo "0. Back\n";
                 echo "Choose an option: ";
 
@@ -305,6 +319,17 @@
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
                         $this->students->delete("id = " . $id);
+                        echo "student deleted.\n";
+                        break;
+
+                    case '5':
+                        print_r($this->students->read("id, first_name, last_name"));
+                        echo "Enter student's ID: ";
+                        $id = trim(fgets(STDIN));
+                        print_r($this->courses->read("id, name"));
+                        echo "Enter course's ID: ";
+                        $courseId = trim(fgets(STDIN));
+                        $this->students->updateCourse(["course_id" => $courseId, "id" => $id]);
                         echo "student deleted.\n";
                         break;
 
