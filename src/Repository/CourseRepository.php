@@ -1,16 +1,24 @@
 <?php 
 
 class CourseRepository implements CrudInterface{
+        private string $table;
         private $conn;
-        private $table = "courses";
 
-        function __construct($conn)
+        public function __construct(PDO $conn, string $table = "courses")
         {
             $this->conn = $conn;
+            $this->table = $table;
+        }
+
+        public function useTable(string $table)
+        {
+            $this->table = $table;
         }
 
         function create($data){
-            $sql = "INSERT INTO {$this->table} (name, department_id, formateur_id, created_at) VALUES (:name, :department_id, :formateur_id, NOW())";
+            $columns = implode(" ,", array_keys($data));
+            $values = implode(" ,:", array_keys($data));
+            $sql = "INSERT INTO {$this->table} ($columns, created_at) VALUES (:$values, NOW())";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(":name", $data["name"]);
             $stmt->bindParam(":department_id", $data["department_id"]);

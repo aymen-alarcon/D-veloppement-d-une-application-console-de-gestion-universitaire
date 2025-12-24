@@ -1,16 +1,24 @@
 <?php
 
 class FormateurRepository implements CrudInterface{
+        private string $table;
         private $conn;
-        private $table = "formateurs";
 
-        function __construct($conn)
+        public function __construct(PDO $conn, string $table = "courses")
         {
             $this->conn = $conn;
+            $this->table = $table;
+        }
+
+        public function useTable(string $table)
+        {
+            $this->table = $table;
         }
 
         function create($data){
-            $sql = "INSERT INTO {$this->table} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
+            $columns = implode(" ,", array_keys($data));
+            $values = implode(" ,:", array_keys($data));
+            $sql = "INSERT INTO {$this->table} ($columns, created_at) VALUES (:$values,NOW())";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(":first_name", $data["first_name"]);
             $stmt->bindParam(":last_name", $data["last_name"]);
@@ -43,5 +51,13 @@ class FormateurRepository implements CrudInterface{
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
+        }
+        
+        function updateCourse($data){
+            $sql = "UPDATE {$this->table}  SET course_id = :course_id WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":id", $data["id"]);
+            $stmt->bindParam(":course_id", $data["course_id"]);
+            $stmt->execute();
         }
 }
