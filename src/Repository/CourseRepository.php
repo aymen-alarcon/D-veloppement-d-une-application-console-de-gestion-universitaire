@@ -1,16 +1,21 @@
 <?php 
 
-class CourseRepository implements CrudInterface{
+class CourseRepository extends Course implements CrudInterface{
         private $conn;
-        private $table = "courses";
 
         function __construct($conn)
         {
             $this->conn = $conn;
         }
 
+        function useTable(string $table){
+            $this->setTable($table);
+        }
+
         function create($data){
-            $sql = "INSERT INTO {$this->table} (name, department_id, formateur_id, created_at) VALUES (:name, :department_id, :formateur_id, NOW())";
+            $columns = implode(" ,", array_keys($data));
+            $values = implode(" ,:", array_keys($data));
+            $sql = "INSERT INTO {$this->table} ($columns, created_at) VALUES (:$values, NOW())";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(":name", $data["name"]);
             $stmt->bindParam(":department_id", $data["department_id"]);

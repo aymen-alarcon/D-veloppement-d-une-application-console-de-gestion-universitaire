@@ -7,14 +7,16 @@
         protected $lastName;
         protected $department_id;
         protected $course_id; 
+        protected $table;
 
-        function __construct($id, $email, $firstName, $lastName, $course_id, $department_id){
+        function __construct($id, $email, $firstName, $lastName, $course_id, $department_id, $table){
             $this->id = $id;
             $this->email = $email;
             $this->firstName = $firstName;
             $this->lastName = $lastName;
             $this->department_id = $department_id;
             $this->course_id = $course_id;
+            $this->table = $table;
         }
 
         function getId(){
@@ -40,6 +42,10 @@
         function getDepartment_id(){
             return $this->department_id;
         }
+
+        function getTable(){
+            return $this->table;
+        }
         
         function setEmail($email){
             $this->email = $email;
@@ -59,6 +65,10 @@
 
         function setDepartment_id($department_id){
             $this->department_id  = $department_id;
+        }
+
+        function setTable($table){
+            $this->table = $table;
         }
     }
 ?>

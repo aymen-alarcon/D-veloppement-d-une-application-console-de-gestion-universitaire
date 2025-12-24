@@ -1,20 +1,24 @@
-<?php
-    class StudentRepository implements CrudInterface{
+<?php    
+    class StudentRepository extends Student implements CrudInterface{
         private $conn;
-        private $table = "students";
-        function __construct($conn)
-        {
+        
+        function __construct(PDO $conn) {
             $this->conn = $conn;
         }
 
+        function useTable(string $table){
+            $this->setTable($table);
+        }
+
         function create($data){
-            $sql = "INSERT INTO {$this->table} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
+            $columns = implode(" ,", array_keys($data));
+            $values = implode(" ,:", array_keys($data));
+            $sql = "INSERT INTO {$this->table} ($columns, created_at) VALUES (:$values,NOW())";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(":first_name", $data["first_name"]);
             $stmt->bindParam(":last_name", $data["last_name"]);
             $stmt->bindParam(":email", $data["email"]);
-            $stmt->execute();
-            return "Student has been created";
+            return $this->conn->lastInsertId();
         }
 
         function update($data){

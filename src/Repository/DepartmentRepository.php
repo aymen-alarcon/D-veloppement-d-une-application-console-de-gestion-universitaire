@@ -1,12 +1,15 @@
 <?php
 
-class DepartmentRepository implements CrudInterface{
+class DepartmentRepository extends Department implements CrudInterface{
         private $conn;
-        private $table = "departments";
         
         function __construct($conn)
         {
             $this->conn = $conn;
+        }
+
+        function useTable(string $table){
+            $this->setTable($table);
         }
 
         function create($name){
@@ -20,8 +23,8 @@ class DepartmentRepository implements CrudInterface{
         function update($data){
             $sql = "UPDATE {$this->table} SET name = :name WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data[0]);
-            $stmt->bindParam(":name", $data[1]);
+            $stmt->bindParam(":id", $data["id"]);
+            $stmt->bindParam(":name", $data["name"]);
             $stmt->execute();
         }
 
