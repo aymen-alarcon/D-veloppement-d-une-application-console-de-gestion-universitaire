@@ -1,15 +1,18 @@
 <?php 
 
-class CourseRepository extends Course implements CrudInterface{
+class CourseRepository implements CrudInterface{
+        private string $table;
         private $conn;
 
-        function __construct($conn)
+        public function __construct(PDO $conn, string $table = "courses")
         {
             $this->conn = $conn;
+            $this->table = $table;
         }
 
-        function useTable(string $table){
-            $this->setTable($table);
+        public function useTable(string $table)
+        {
+            $this->table = $table;
         }
 
         function create($data){

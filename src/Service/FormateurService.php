@@ -23,7 +23,7 @@ class FormateurService{
 
                 switch ($choice) {
                     case '1':
-                        $this->formateurs->setTable("formateurs");
+                        $this->formateurs->useTable("formateurs");
                         echo "First name: ";
                         $firstName = trim(fgets(STDIN));
                         echo "Last name: ";
@@ -35,12 +35,12 @@ class FormateurService{
                         break;
 
                     case '2':
-                        $this->formateurs->setTable("formateurs");
+                        $this->formateurs->useTable("formateurs");
                         print_r($this->formateurs->read("id, first_name, last_name"));
                         break;
 
                     case '3':
-                        $this->formateurs->setTable("formateurs");
+                        $this->formateurs->useTable("formateurs");
                         print_r($this->formateurs->read("id, first_name, last_name"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
@@ -55,7 +55,7 @@ class FormateurService{
                         break;
 
                     case '4':
-                        $this->formateurs->setTable("formateurs");
+                        $this->formateurs->useTable("formateurs");
                         print_r($this->formateurs->read("id, first_name, last_name"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
@@ -64,11 +64,11 @@ class FormateurService{
                         break;
 
                     case '5':
-                        $this->formateurs->setTable("formateurs");
+                        $this->formateurs->useTable("formateurs");
                         print_r($this->formateurs->read("id, first_name, last_name"));
                         echo "Enter formateur's ID: ";
                         $id = trim(fgets(STDIN));
-                        $this->courses->setTable("courses");
+                        $this->courses->useTable("courses");
                         print_r($this->courses->read("id, name"));
                         echo "Enter course's ID: ";
                         $courseId = trim(fgets(STDIN));

@@ -24,7 +24,7 @@
 
                 switch ($choice) {
                     case '1':
-                        $this->students->setTable("students");
+                        $this->students->useTable("students");
                         echo "First name: ";
                         $firstName = trim(fgets(STDIN));
                         echo "Last name: ";
@@ -36,12 +36,12 @@
                         break;
 
                     case '2':
-                        $this->students->setTable("students");
+                        $this->students->useTable("students");
                         print_r($this->students->read("id, first_name, last_name"));
                         break;
 
                     case '3':
-                        $this->students->setTable("students");
+                        $this->students->useTable("students");
                         print_r($this->students->read("id, first_name, last_name"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
@@ -57,7 +57,7 @@
                         break;
 
                     case '4':
-                        $this->students->setTable("students");
+                        $this->students->useTable("students");
                         print_r($this->students->read("id, first_name, last_name"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
@@ -66,14 +66,14 @@
                         break;
 
                     case '5':
-                        $this->students->setTable("students");
+                        $this->students->useTable("students");
                         print_r($this->students->read("id, first_name, last_name"));
                         echo "Enter student's ID: ";
                         $id = trim(fgets(STDIN));
-                        $this->courses->setTable("courses");
+                        $this->courses->useTable("courses");
                         print_r($this->courses->read("id, name"));
                         echo "Enter course's ID: ";
-                        $this->students->setTable("students");
+                        $this->students->useTable("students");
                         $courseId = trim(fgets(STDIN));
                         $this->students->updateCourse(["course_id" => $courseId, "id" => $id]);
                         echo "student deleted.\n";

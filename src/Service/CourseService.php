@@ -28,25 +28,25 @@ class CourseService{
                     case '1':
                         echo "Course name: ";
                         $name = trim(fgets(STDIN));
-                        $this->departments->setTable("departments");
+                        $this->departments->useTable("departments");
                         print_r($this->departments->read("id, name"));
                         echo "Department ID: ";
                         $departmentId = trim(fgets(STDIN));
-                        $this->formateurs->setTable("formateurs");
+                        $this->formateurs->useTable("formateurs");
                         print_r($this->formateurs->read("id, first_name, last_name"));
                         echo "Formateur ID: ";
                         $formateurId = trim(fgets(STDIN));
-                        $this->courses->setTable("courses");
+                        $this->courses->useTable("courses");
                         $this->courses->create(["name" => $name,"department_id" => $departmentId,"formateur_id" => $formateurId]);
                         echo "Course created.\n";
                         break;
 
                     case '2':
-                        $this->courses->setTable("courses");
+                        $this->courses->useTable("courses");
                         print_r($this->courses->read("id, name"));
                         break;
                     case '3':
-                        $this->courses->setTable("courses");
+                        $this->courses->useTable("courses");
                         print_r($this->courses->read("id, name"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
@@ -57,7 +57,7 @@ class CourseService{
                         break;
 
                     case '4':
-                        $this->courses->setTable("courses");
+                        $this->courses->useTable("courses");
                         print_r($this->courses->read("id, name"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));

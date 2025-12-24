@@ -18,7 +18,7 @@ class DepartmentService {
             echo "0. Back\n";
             echo "Choose an option: ";
             $choice = trim(fgets(STDIN));
-            $this->departments->setTable("departments");
+            $this->departments->useTable("departments");
             switch ($choice) {
 
                 case '1':
