@@ -1,7 +1,7 @@
 <?php
 interface CrudInterface {
-    public function create($data);
-    public function read($condition);
-    public function update($data);
-    public function delete($condition);
+    // public function create(Student $student);
+    // public function read($condition, $table);
+    // public function update(Student $student);
+    // public function delete($condition, $table);
 }

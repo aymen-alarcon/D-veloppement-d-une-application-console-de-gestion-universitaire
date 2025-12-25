@@ -6,6 +6,7 @@ class FormateurService{
     public function __construct(PDO $conn)
     {
         $this->formateurs = new FormateurRepository($conn);
+        $this->courses = new CourseRepository($conn);
     }
 
     function formateurMenu() {
@@ -23,25 +24,23 @@ class FormateurService{
 
                 switch ($choice) {
                     case '1':
-                        $this->formateurs->useTable("formateurs");
                         echo "First name: ";
                         $firstName = trim(fgets(STDIN));
                         echo "Last name: ";
                         $lastName = trim(fgets(STDIN));
                         echo "Email: ";
                         $email = trim(fgets(STDIN));
-                        $this->formateurs->create(["first_name" => $firstName,"last_name"  => $lastName,"email" => $email]);
+                        $formateur = new Formateur(NULL, "formateurs", $firstName, $lastName, $email); 
+                        $this->formateurs->create($formateur);
                         echo "Formateur created.\n";
                         break;
 
                     case '2':
-                        $this->formateurs->useTable("formateurs");
-                        print_r($this->formateurs->read("id, first_name, last_name"));
+                        print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
                         break;
 
                     case '3':
-                        $this->formateurs->useTable("formateurs");
-                        print_r($this->formateurs->read("id, first_name, last_name"));
+                        print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
                         echo "First name: ";
@@ -50,30 +49,27 @@ class FormateurService{
                         $lastName = trim(fgets(STDIN));
                         echo "Email: ";
                         $email = trim(fgets(STDIN));
-                        $this->formateurs->update(["id" => $id, "first_name" => $firstName,"last_name"  => $lastName,"email" => $email]);
+                        $formateur = new Formateur($id, "formateurs", $firstName, $lastName, $email); 
+                        $this->formateurs->update($formateur);
                         echo "Formateur updated.\n";
                         break;
 
                     case '4':
-                        $this->formateurs->useTable("formateurs");
-                        print_r($this->formateurs->read("id, first_name, last_name"));
+                        print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
-                        $this->formateurs->delete("id = " . $id);
+                        $this->formateurs->delete("id = " . $id, "formateurs");
                         echo "Formateur deleted.\n";
                         break;
 
                     case '5':
-                        $this->formateurs->useTable("formateurs");
-                        print_r($this->formateurs->read("id, first_name, last_name"));
+                        print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
                         echo "Enter formateur's ID: ";
                         $id = trim(fgets(STDIN));
-                        $this->courses->useTable("courses");
-                        print_r($this->courses->read("id, name"));
+                        print_r($this->courses->read("id, name", "courses"));
                         echo "Enter course's ID: ";
                         $courseId = trim(fgets(STDIN));
-                        $this->formateurs->updateCourse(["course_id" => $courseId, "id" => $id]);
-                        echo "formateur deleted.\n";
+                        $this->courses->assignToCourse("formateurs_course", "formateur_id", $id, $courseId);
                         break;
 
                     case '0':

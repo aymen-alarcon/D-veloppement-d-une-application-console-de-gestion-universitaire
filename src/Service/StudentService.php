@@ -1,11 +1,15 @@
 <?php
     class StudentService extends UserService{
+        private PDO $conn;
         private StudentRepository $students;
         private CourseRepository $courses;
+        private UserRepository $users;
 
         public function __construct(PDO $conn) {
+            $this->conn = $conn;
             $this->students = new StudentRepository($conn);
             $this->courses = new CourseRepository($conn);
+            $this->users = new UserRepository($this->conn);
         }
 
         function studentMenu() {
@@ -24,59 +28,59 @@
 
                 switch ($choice) {
                     case '1':
-                        $this->students->useTable("students");
                         echo "First name: ";
                         $firstName = trim(fgets(STDIN));
                         echo "Last name: ";
                         $lastName = trim(fgets(STDIN));
                         echo "Email: ";
                         $email = trim(fgets(STDIN));
-                        $this->students->create(["first_name" => $firstName,"last_name"  => $lastName,"email" => $email]);
+                        $student = new Student(NULL, "students", $email, $firstName, $lastName);
+                        $this->students->create($student);
                         echo "student created.\n";
                         break;
 
                     case '2':
-                        $this->students->useTable("students");
-                        print_r($this->students->read("id, first_name, last_name"));
+                        print_r($this->students->read("*", "students"));
                         break;
 
                     case '3':
-                        $this->students->useTable("students");
-                        print_r($this->students->read("id, first_name, last_name"));
+                        print_r($this->students->read("*", "students"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
-
-                        echo "First name: ";
+                        echo "First name: ";  
                         $firstName = trim(fgets(STDIN));
-                        echo "Last name: ";
+                        echo "Last name: ";   
                         $lastName = trim(fgets(STDIN));
-                        echo "Email: ";
+                        echo "Email: ";       
                         $email = trim(fgets(STDIN));
-                        $this->students->update(["id" => $id, "first_name" => $firstName,"last_name"  => $lastName,"email" => $email]);
-                        echo "student updated.\n";
+                        $student = new Student($id, "students", $email, $firstName, $lastName);
+                        $this->students->update($student);
+                        echo "Student updated.\n";
                         break;
-
+                        
                     case '4':
-                        $this->students->useTable("students");
-                        print_r($this->students->read("id, first_name, last_name"));
+                        print_r($this->students->read("*", "students"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
-                        $this->students->delete("id = " . $id);
+                        $this->students->delete("id = " . $id , "students");
                         echo "student deleted.\n";
                         break;
 
                     case '5':
-                        $this->students->useTable("students");
-                        print_r($this->students->read("id, first_name, last_name"));
+                        print_r($this->students->read("id, first_name, last_name", "students"));
                         echo "Enter student's ID: ";
                         $id = trim(fgets(STDIN));
-                        $this->courses->useTable("courses");
-                        print_r($this->courses->read("id, name"));
+                        print_r($this->courses->read("id, name", "courses"));
                         echo "Enter course's ID: ";
-                        $this->students->useTable("students");
                         $courseId = trim(fgets(STDIN));
-                        $this->students->updateCourse(["course_id" => $courseId, "id" => $id]);
-                        echo "student deleted.\n";
+                        $this->courses->assignToCourse("student_course", "student_id", $id, $courseId);
+                        break;
+
+                    case '6':
+                        print_r($this->students->read("*", "students"));
+                        echo "Enter student ID: ";
+                        $id = trim(fgets(STDIN));
+                        print_r($this->students->readAll($id));
                         break;
 
                     case '0':

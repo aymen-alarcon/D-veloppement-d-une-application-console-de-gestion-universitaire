@@ -28,40 +28,39 @@ class CourseService{
                     case '1':
                         echo "Course name: ";
                         $name = trim(fgets(STDIN));
-                        $this->departments->useTable("departments");
-                        print_r($this->departments->read("id, name"));
+                        print_r($this->departments->read("*", "departments"));
                         echo "Department ID: ";
                         $departmentId = trim(fgets(STDIN));
-                        $this->formateurs->useTable("formateurs");
-                        print_r($this->formateurs->read("id, first_name, last_name"));
-                        echo "Formateur ID: ";
-                        $formateurId = trim(fgets(STDIN));
-                        $this->courses->useTable("courses");
-                        $this->courses->create(["name" => $name,"department_id" => $departmentId,"formateur_id" => $formateurId]);
+                        $course = new Course(NULL, $name, "courses", $departmentId);
+                        $this->courses->create($course);
                         echo "Course created.\n";
                         break;
 
                     case '2':
-                        $this->courses->useTable("courses");
-                        print_r($this->courses->read("id, name"));
+                        print_r($this->courses->read("id, name", "courses"));
                         break;
                     case '3':
-                        $this->courses->useTable("courses");
-                        print_r($this->courses->read("id, name"));
+                        print_r($this->courses->read("id, name", "courses"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
                         echo "New name: ";
                         $name = trim(fgets(STDIN));
-                        $this->courses->update(["name" => $name, "id" => $id]);
+                        print_r($this->departments->read("*", "departments"));
+                        echo "Department ID: ";
+                        $departmentId = trim(fgets(STDIN));
+                        print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
+                        echo "Formateur ID: ";
+                        $formateurId = trim(fgets(STDIN));
+                        $course = new Course($id, $name, "courses", $departmentId, $formateurId);
+                        $this->courses->update($course);
                         echo "Course updated.\n";
                         break;
 
                     case '4':
-                        $this->courses->useTable("courses");
-                        print_r($this->courses->read("id, name"));
+                        print_r($this->courses->read("id, name", "courses"));
                         echo "Enter ID: ";
                         $id = trim(fgets(STDIN));
-                        $this->courses->delete("id = " . $id);
+                        $this->courses->delete("id = " . $id, "courses");
                         echo "Course deleted.\n";
                         break;
 

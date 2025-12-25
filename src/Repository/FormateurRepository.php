@@ -1,63 +1,53 @@
 <?php
 
 class FormateurRepository implements CrudInterface{
-        private string $table;
         private $conn;
 
-        public function __construct(PDO $conn, string $table = "courses")
+        public function __construct(PDO $conn)
         {
             $this->conn = $conn;
-            $this->table = $table;
         }
 
-        public function useTable(string $table)
-        {
-            $this->table = $table;
-        }
-
-        function create($data){
-            $columns = implode(" ,", array_keys($data));
-            $values = implode(" ,:", array_keys($data));
-            $sql = "INSERT INTO {$this->table} ($columns, created_at) VALUES (:$values,NOW())";
+        function create(Formateur $formateur){
+            $sql = "INSERT INTO {$formateur->getTable()} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":first_name", $data["first_name"]);
-            $stmt->bindParam(":last_name", $data["last_name"]);
-            $stmt->bindParam(":email", $data["email"]);
+            $fname = $formateur->getFirstName();
+            $lname = $formateur->getLastName();
+            $email = $formateur->getEmail();
+            $stmt->bindParam(":first_name", $fname);
+            $stmt->bindParam(":last_name", $lname);
+            $stmt->bindParam(":email", $email);
             $stmt->execute();
             return "Student has been created";
         }
 
-        function update($data){
-            $sql = "UPDATE {$this->table} SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
+        function update(Formateur $formateur){
+            $sql = "UPDATE {$formateur->getTable()} SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data["id"]);
-            $stmt->bindParam(":first_name", $data["first_name"]);
-            $stmt->bindParam(":last_name", $data["last_name"]);
-            $stmt->bindParam(":email", $data["email"]);
+            $id = $formateur->getId();
+            $fname = $formateur->getFirstName();
+            $lname = $formateur->getLastName();
+            $email = $formateur->getLastName();
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":first_name", $fname);
+            $stmt->bindParam(":last_name", $lname);
+            $stmt->bindParam(":email", $email);
             $stmt->execute();
         }
 
-        function read($condition){
-            $sql = "SELECT $condition FROM {$this->table}";
+        function read($condition, $table){
+            $sql = "SELECT $condition FROM $table";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
         }
 
-        function delete($condition){
-            $sql = "DELETE FROM {$this->table} WHERE $condition";
+        function delete($condition, $table){
+            $sql = "DELETE FROM $table WHERE $condition";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
-        }
-        
-        function updateCourse($data){
-            $sql = "UPDATE {$this->table}  SET course_id = :course_id WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data["id"]);
-            $stmt->bindParam(":course_id", $data["course_id"]);
-            $stmt->execute();
         }
 }
