@@ -61,20 +61,22 @@
                         echo "student deleted.\n";
                         break;
 
-                    // case '5':
-                    //     echo "Enter student ID: ";
-                    //     $id = trim(fgets(STDIN));
+                    case '5':
+                        print_r($this->students->read("*", "students"));
+                        echo "Enter student ID: ";
+                        $id = trim(fgets(STDIN));
+                        echo "Enter course ID: ";
+                        $course_id = trim(fgets(STDIN));
+                        $this->students->readAll($id, $course_id);
+                        break;
 
-                    //     echo "Enter course ID: ";
-                    //     $crouse_id = trim(fgets(STDIN));
-
-                    //     $s = new Student("", "", "");
-                    //     $s->setId($id);
-                    //     $s->setCourseId($crouse_id);
-
-                    //     $this->students->updateCourse($s);
-                    //     echo "Course assigned.\n";
-                    //     break;
+                    case '6':
+                        print_r($this->students->read("*", "students"));
+                        echo "Enter student ID: ";
+                        $id = trim(fgets(STDIN));
+                        print_r($this->students->readAll($id));
+                        echo "Course assigned.\n";
+                        break;
 
                     case '0':
                         return;

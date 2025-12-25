@@ -50,4 +50,12 @@
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $users;
     }
+
+    function readAll($id){
+        $sql = "SELECT c.name FROM students s LEFT JOIN courses c ON c.id = s.course_id AND s.id = $id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
 }
