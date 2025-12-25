@@ -1,17 +1,12 @@
 <?php
-    class User{
-        protected $email;
+    class User extends Person{
         protected $password;
         protected $role;
 
-        function __construct($email, $password, $role){
-            $this->email = $email;
+        function __construct($password, $role, $email, $firstName, $lastName){
+            parent::__construct($email, $firstName, $lastName);
             $this->password = $password;
             $this->role = $role;
-        }
-
-        function getEmail(){
-            return $this->email;
         }
 
         function getPassword(){
@@ -20,10 +15,6 @@
 
         function getRole(){
             return $this->role;
-        }
-
-        function setEmail($email){
-            $this->email = $email;
         }
 
         function setPassword($password){
