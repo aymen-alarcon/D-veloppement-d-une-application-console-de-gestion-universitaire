@@ -5,7 +5,7 @@
         protected $role;
 
         function __construct($password, $role, $email){
-            $this->email;
+            $this->email = $email;
             $this->password = $password;
             $this->role = $role;
         }

@@ -17,8 +17,16 @@ class UserRepository {
         $users = $stmt->fetch(PDO::FETCH_ASSOC);
         $password = $user->getPassword();
 
-        if ($users && $password === $user["password"]) {
+        if ($users && $password === $users["password"]) {
             return new User($users["email"], $users["password"], $users["role"]);
         }
+    }
+
+    function read($condition, $table){
+        $sql = "SELECT $condition FROM $table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
     }
 }

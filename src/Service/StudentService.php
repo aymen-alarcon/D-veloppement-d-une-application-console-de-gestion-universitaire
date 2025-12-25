@@ -1,11 +1,15 @@
 <?php
     class StudentService extends UserService{
+        private PDO $conn;
         private StudentRepository $students;
         private CourseRepository $courses;
+        private UserRepository $users;
 
         public function __construct(PDO $conn) {
+            $this->conn = $conn;
             $this->students = new StudentRepository($conn);
             $this->courses = new CourseRepository($conn);
+            $this->users = new UserRepository($this->conn);
         }
 
         function studentMenu() {
@@ -53,6 +57,7 @@
                         $this->students->update($student);
                         echo "Student updated.\n";
                         break;
+                        
                     case '4':
                         print_r($this->students->read("*", "students"));
                         echo "Enter ID: ";
