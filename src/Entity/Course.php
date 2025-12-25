@@ -3,15 +3,13 @@
         protected $id;
         protected $name;
         protected $table;
-        protected $formateurId;
-        protected $courseId;
+        protected $departmentId;
 
-        function __construct($id, $name, $table, $formateurId, $courseId){
+        function __construct($id, $name, $table, $departmentId){
             $this->id = $id;
             $this->name = $name;
             $this->table = $table;
-            $this->courseId = $courseId;
-            $this->formateurId = $formateurId;
+            $this->departmentId = $departmentId;
         }
 
         function getId(){
@@ -37,28 +35,16 @@
             return $this;
         }
 
-            public function getFormateur()
-            {
-                        return $this->formateurId;
-            }
+        public function getDepartment()
+        {
+            return $this->departmentId;
+        }
 
-            public function setFormateur($formateurId)
-            {
-                        $this->formateurId = $formateurId;
+        public function setDepartment($departmentId)
+        {
+            $this->departmentId = $departmentId;
 
-                        return $this;
-            }
-
-            public function getCourseId()
-            {
-                        return $this->courseId;
-            }
-
-            public function setCourseId($courseId)
-            {
-                        $this->courseId = $courseId;
-
-                        return $this;
-            }
+            return $this;
+        }
     }
 ?>

@@ -6,6 +6,7 @@ class FormateurService{
     public function __construct(PDO $conn)
     {
         $this->formateurs = new FormateurRepository($conn);
+        $this->courses = new CourseRepository($conn);
     }
 
     function formateurMenu() {
@@ -61,17 +62,15 @@ class FormateurService{
                         echo "Formateur deleted.\n";
                         break;
 
-                    // case '5':
-                    //     print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
-                    //     echo "Enter formateur's ID: ";
-                    //     $id = trim(fgets(STDIN));
-                    //     $this->courses->useTable("courses");
-                    //     print_r($this->courses->read("id, name", "formateurs"));
-                    //     echo "Enter course's ID: ";
-                    //     $courseId = trim(fgets(STDIN));
-                    //     $this->formateurs->updateCourse(["course_id" => $courseId, "id" => $id]);
-                    //     echo "formateur deleted.\n";
-                    //     break;
+                    case '5':
+                        print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
+                        echo "Enter formateur's ID: ";
+                        $id = trim(fgets(STDIN));
+                        print_r($this->courses->read("id, name", "courses"));
+                        echo "Enter course's ID: ";
+                        $courseId = trim(fgets(STDIN));
+                        $this->courses->assignToCourse("formateurs_course", "formateur_id", $id, $courseId);
+                        break;
 
                     case '0':
                         return;

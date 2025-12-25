@@ -9,30 +9,26 @@ class CourseRepository implements CrudInterface{
         }
 
         function create(Course $course){
-            $sql = "INSERT INTO {$course->getTable()} (name, department_id, formateur_id, created_at) VALUES (:name, :department_id, :formateur_id, NOW())";
+            $sql = "INSERT INTO {$course->getTable()} (name, department_id, created_at) VALUES (:name, :department_id, NOW())";
             $stmt = $this->conn->prepare($sql);
             $name = $course->getName();
-            $courseId = $course->getCourseId();
-            $formateurId = $course->getFormateur();
+            $departmentId = $course->getDepartment();
             $name = $course->getName();
             $stmt->bindParam(":name", $name);
-            $stmt->bindParam(":department_id", $formateurId);
-            $stmt->bindParam(":formateur_id", $courseId);
+            $stmt->bindParam(":department_id", $departmentId);
             $stmt->execute();
             return "Student has been created";
         }
 
         function update(Course $course){
-            $sql = "UPDATE {$course->getTable()} SET name = :name, department_id = :department_id , formateur_id = :formateur_id WHERE id = :id";
+            $sql = "UPDATE {$course->getTable()} SET name = :name, department_id = :department_id WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $id = $course->getId();
             $name = $course->getName();
-            $courseId = $course->getCourseId();
-            $formateurId = $course->getFormateur();
+            $departmentId = $course->getDepartment();
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":name", $name);
-            $stmt->bindParam(":department_id", $formateurId);
-            $stmt->bindParam(":formateur_id", $courseId);
+            $stmt->bindParam(":department_id", $departmentId);
             $stmt->execute();
         }
 
@@ -47,6 +43,14 @@ class CourseRepository implements CrudInterface{
         function delete($condition, $table){
             $sql = "DELETE FROM $table WHERE $condition";
             $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+        }
+
+        function assignToCourse($table, $entityColumn, $entityId, $courseId){
+            $sql = "INSERT INTO $table (course_id, $entityColumn) VALUES (:course_id, :$entityColumn)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":course_id", $courseId);
+            $stmt->bindParam(":$entityColumn", $entityId);
             $stmt->execute();
         }
 }

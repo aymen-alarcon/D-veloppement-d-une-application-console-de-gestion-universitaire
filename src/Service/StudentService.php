@@ -62,12 +62,13 @@
                         break;
 
                     case '5':
-                        print_r($this->students->read("*", "students"));
-                        echo "Enter student ID: ";
+                        print_r($this->students->read("id, first_name, last_name", "students"));
+                        echo "Enter student's ID: ";
                         $id = trim(fgets(STDIN));
-                        echo "Enter course ID: ";
-                        $course_id = trim(fgets(STDIN));
-                        $this->students->readAll($id, $course_id);
+                        print_r($this->courses->read("id, name", "courses"));
+                        echo "Enter course's ID: ";
+                        $courseId = trim(fgets(STDIN));
+                        $this->courses->assignToCourse("student_course", "student_id", $id, $courseId);
                         break;
 
                     case '6':
@@ -75,7 +76,6 @@
                         echo "Enter student ID: ";
                         $id = trim(fgets(STDIN));
                         print_r($this->students->readAll($id));
-                        echo "Course assigned.\n";
                         break;
 
                     case '0':

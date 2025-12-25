@@ -31,10 +31,7 @@ class CourseService{
                         print_r($this->departments->read("*", "departments"));
                         echo "Department ID: ";
                         $departmentId = trim(fgets(STDIN));
-                        print_r($this->formateurs->read("id, first_name, last_name", "formateurs"));
-                        echo "Formateur ID: ";
-                        $formateurId = trim(fgets(STDIN));
-                        $course = new Course(NULL, $name, "courses", $departmentId, $formateurId);
+                        $course = new Course(NULL, $name, "courses", $departmentId);
                         $this->courses->create($course);
                         echo "Course created.\n";
                         break;

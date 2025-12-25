@@ -17,8 +17,7 @@
         $stmt->bindParam(":first_name", $fname);
         $stmt->bindParam(":last_name", $lname);
         $stmt->bindParam(":email", $email);
-
-        return $student;
+        $stmt->execute();
     }
 
     public function update(Student $student){
@@ -52,7 +51,7 @@
     }
 
     function readAll($id){
-        $sql = "SELECT c.name FROM students s LEFT JOIN courses c ON c.id = s.course_id AND s.id = $id";
+        $sql = "SELECT c.name FROM courses c JOIN student_course s ON c.id = s.course_id AND s.student_id = $id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
