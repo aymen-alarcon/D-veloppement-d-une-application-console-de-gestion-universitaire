@@ -1,61 +1,53 @@
 <?php    
     class StudentRepository implements CrudInterface{
-        private string $table;
-        private $conn;
+        private PDO $conn;
 
-        public function __construct(PDO $conn, string $table = "courses")
+        public function __construct(PDO $conn)
         {
             $this->conn = $conn;
-            $this->table = $table;
         }
 
-        public function useTable(string $table)
-        {
-            $this->table = $table;
-        }
 
-        function create($data){
-            $columns = implode(" ,", array_keys($data));
-            $values = implode(" ,:", array_keys($data));
-            $sql = "INSERT INTO {$this->table} ($columns, created_at) VALUES (:$values,NOW())";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":first_name", $data["first_name"]);
-            $stmt->bindParam(":last_name", $data["last_name"]);
-            $stmt->bindParam(":email", $data["email"]);
-            return $this->conn->lastInsertId();
-        }
+    public function create(Student $student){
+        $sql = "INSERT INTO {$student->getTable()} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email, NOW())";
+        $stmt = $this->conn->prepare($sql);
+        $fname = $student->getFirstName();
+        $lname = $student->getLastName();
+        $email = $student->getEmail();
+        $stmt->bindParam(":first_name", $fname);
+        $stmt->bindParam(":last_name", $lname);
+        $stmt->bindParam(":email", $email);
 
-        function update($data){
-            $sql = "UPDATE {$this->table}  SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data["id"]);
-            $stmt->bindParam(":first_name", $data["first_name"]);
-            $stmt->bindParam(":last_name", $data["last_name"]);
-            $stmt->bindParam(":email", $data["email"]);
-            $stmt->execute();
-        }
-
-        function read($condition){
-            $sql = "SELECT $condition FROM {$this->table}";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $users;
-        }
-
-        function delete($condition){
-            $sql = "DELETE FROM {$this->table} WHERE $condition";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $users;
-        }
-
-        function updateCourse($data){
-            $sql = "UPDATE {$this->table}  SET course_id = :course_id WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data["id"]);
-            $stmt->bindParam(":course_id", $data["course_id"]);
-            $stmt->execute();
-        }
+        return $student;
     }
+
+    public function update(Student $student){
+        $sql = "UPDATE {$student->getTable()}  SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $id = $student->getId();
+        $fname = $student->getFirstName();
+        $lname = $student->getLastName();
+        $email = $student->getLastName();
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":first_name", $fname);
+        $stmt->bindParam(":last_name", $lname);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+    }
+
+    function read($condition, $table){
+        $sql = "SELECT $condition FROM $table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
+
+    function delete($condition, $table){
+        $sql = "DELETE FROM $table WHERE $condition";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
+}

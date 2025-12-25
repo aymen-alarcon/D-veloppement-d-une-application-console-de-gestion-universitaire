@@ -4,14 +4,9 @@
         protected $password;
         protected $table;
 
-        function __construct($id, $table, $email, $firstName, $lastName){
-            parent::__construct($email, $firstName, $lastName);
-            $this->id = $id;
+        function __construct($id, $table, $firstName, $lastName, $email){
+            parent::__construct($id, $email, $firstName, $lastName);
             $this->table = $table;
-        }
-
-        function getId(){
-            return $this->id;
         }
         
         function getTable(){

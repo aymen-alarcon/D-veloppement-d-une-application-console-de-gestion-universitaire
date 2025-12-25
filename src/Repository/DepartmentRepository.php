@@ -1,46 +1,42 @@
 <?php
 
 class DepartmentRepository implements CrudInterface{
-        private string $table;
         private $conn;
 
-        public function __construct(PDO $conn, string $table = "courses")
+        public function __construct(PDO $conn)
         {
             $this->conn = $conn;
-            $this->table = $table;
         }
 
-        public function useTable(string $table)
-        {
-            $this->table = $table;
-        }
-
-        function create($name){
-            $sql = "INSERT INTO {$this->table} (name, created_at) VALUES (:name, NOW())";
+        function create(Department $department){
+            $sql = "INSERT INTO {$department->getTable()} (name, created_at) VALUES (:name, NOW())";
             $stmt = $this->conn->prepare($sql);
+            $name = $department->getName();
             $stmt->bindParam(":name", $name);
             $stmt->execute();
             return "Student has been created";
         }
-
-        function update($data){
-            $sql = "UPDATE {$this->table} SET name = :name WHERE id = :id";
+        
+        function update(Department $department){
+            $sql = "UPDATE {$department->getTable()} SET name = :name WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(":id", $data["id"]);
-            $stmt->bindParam(":name", $data["name"]);
+            $id= $department->getId();
+            $name = $department->getName();
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":name", $name);
             $stmt->execute();
         }
 
-        function read($condition){
-            $sql = "SELECT $condition FROM {$this->table}";
+        function read($condition, $table){
+            $sql = "SELECT $condition FROM $table";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $users;
         }
 
-        function delete($condition){
-            $sql = "DELETE FROM {$this->table} WHERE $condition";
+        function delete($condition, $table){
+            $sql = "DELETE FROM $table WHERE $condition";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
         }

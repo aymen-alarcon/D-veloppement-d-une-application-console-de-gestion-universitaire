@@ -18,32 +18,33 @@ class DepartmentService {
             echo "0. Back\n";
             echo "Choose an option: ";
             $choice = trim(fgets(STDIN));
-            $this->departments->useTable("departments");
             switch ($choice) {
 
                 case '1':
                     echo "Department name: ";
                     $name = trim(fgets(STDIN));
-                    $this->departments->create($name);
+                    $departments = new Department(NULL, $name, "departments");
+                    $this->departments->create($departments);
                     echo "Created.\n";
                     break;
 
                 case '2':
-                    print_r($this->departments->read("id,name"));
+                    print_r($this->departments->read("id,name", "departments"));
                     break;
 
                 case '3':
-                    print_r($this->departments->read("id,name"));
+                    print_r($this->departments->read("id,name", "departments"));
                     echo "ID: "; $id = trim(fgets(STDIN));
                     echo "New name: "; $name = trim(fgets(STDIN));
-                    $this->departments->update([$id,$name]);
+                    $departments = new Department($id, $name, "departments");
+                    $this->departments->update($departments);
                     echo "Updated.\n";
                     break;
 
                 case '4':
-                    print_r($this->departments->read("id,name"));
+                    print_r($this->departments->read("id,name", "departments"));
                     echo "ID: "; $id = trim(fgets(STDIN));
-                    $this->departments->delete("id=".$id);
+                    $this->departments->delete("id= ". $id, "departments");
                     echo "Deleted.\n";
                     break;
 

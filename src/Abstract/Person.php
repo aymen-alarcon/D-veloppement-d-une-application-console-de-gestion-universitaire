@@ -3,9 +3,11 @@ abstract class Person {
     protected $firstName;
     protected $lastName;
     protected $email;
+    protected $id;
 
-    function __construct($email, $firstName, $lastName)
+    function __construct($id, $email, $firstName, $lastName)
     {
+        $this->id = $id;
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -39,5 +41,15 @@ abstract class Person {
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 }
