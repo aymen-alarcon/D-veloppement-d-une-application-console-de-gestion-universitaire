@@ -10,15 +10,16 @@ class UserRepository {
     }
 
     public function login(User $user) {
+        
         $sql = "SELECT * FROM users WHERE email = ?";
         $stmt = $this->conn->prepare($sql);
         $email = $user->getEmail();
         $stmt->execute([$email]);
         $users = $stmt->fetch(PDO::FETCH_ASSOC);
         $password = $user->getPassword();
-
-        if ($users && $password === $users["password"]) {
-            return new User($users["email"], $users["password"], $users["role"]);
+        if ($users && $password == $users["password"]) {
+            $user->setRole($users["role"]);
+            return $users;
         }
     }
 

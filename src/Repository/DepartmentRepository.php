@@ -8,7 +8,7 @@ class DepartmentRepository implements CrudInterface{
             $this->conn = $conn;
         }
 
-        function create(Department $department){
+        function create($department){
             $sql = "INSERT INTO {$department->getTable()} (name, created_at) VALUES (:name, NOW())";
             $stmt = $this->conn->prepare($sql);
             $name = $department->getName();
@@ -17,7 +17,7 @@ class DepartmentRepository implements CrudInterface{
             return "Student has been created";
         }
         
-        function update(Department $department){
+        function update($department){
             $sql = "UPDATE {$department->getTable()} SET name = :name WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $id= $department->getId();
