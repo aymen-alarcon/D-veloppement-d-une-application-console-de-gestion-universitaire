@@ -8,7 +8,7 @@ class FormateurRepository implements CrudInterface{
             $this->conn = $conn;
         }
 
-        function create(Formateur $formateur){
+        function create($formateur){
             $sql = "INSERT INTO {$formateur->getTable()} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email,NOW())";
             $stmt = $this->conn->prepare($sql);
             $fname = $formateur->getFirstName();
@@ -21,7 +21,7 @@ class FormateurRepository implements CrudInterface{
             return "Student has been created";
         }
 
-        function update(Formateur $formateur){
+        function update($formateur){
             $sql = "UPDATE {$formateur->getTable()} SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $id = $formateur->getId();

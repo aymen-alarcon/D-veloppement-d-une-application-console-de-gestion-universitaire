@@ -8,7 +8,7 @@ class CourseRepository implements CrudInterface{
             $this->conn = $conn;
         }
 
-        function create(Course $course){
+        function create($course){
             $sql = "INSERT INTO {$course->getTable()} (name, department_id, created_at) VALUES (:name, :department_id, NOW())";
             $stmt = $this->conn->prepare($sql);
             $name = $course->getName();
@@ -20,7 +20,7 @@ class CourseRepository implements CrudInterface{
             return "Student has been created";
         }
 
-        function update(Course $course){
+        function update($course){
             $sql = "UPDATE {$course->getTable()} SET name = :name, department_id = :department_id WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $id = $course->getId();

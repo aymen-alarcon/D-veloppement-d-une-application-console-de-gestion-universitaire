@@ -8,7 +8,7 @@
         }
 
 
-    public function create(Student $student){
+    public function create($student){
         $sql = "INSERT INTO {$student->getTable()} (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email, NOW())";
         $stmt = $this->conn->prepare($sql);
         $fname = $student->getFirstName();
@@ -20,7 +20,7 @@
         $stmt->execute();
     }
 
-    public function update(Student $student){
+    public function update($student){
         $sql = "UPDATE {$student->getTable()}  SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $id = $student->getId();

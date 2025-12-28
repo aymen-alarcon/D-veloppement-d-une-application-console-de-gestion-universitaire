@@ -1,5 +1,5 @@
 <?php
-    class User extends Person{
+    class User{
         protected $email;
         protected $password;
         protected $role;

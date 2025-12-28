@@ -28,17 +28,17 @@
             $email = trim(fgets(STDIN));
             echo "Enter your password: ";
             $password = trim(fgets(STDIN));
-            $users = new User($password, null, $email);
-            $this->service->login($users);
+            $credentials = new User($password, null, $email);
+            $loggedUser = $this->service->login($credentials);
 
-            if (!$users) {
+            if (!$loggedUser || $loggedUser === "Invalid Credentials") {
                 echo "Invalid credentials.\n";
                 exit;
-            }else{
-                echo "good work.\n";
             }
 
-            if ($users->getRole() == 'admin') {
+            echo "good work.\n";
+
+            if ($credentials->getRole() == 'admin') {
                 echo "\n=== University Management ===\n";
                 echo "1. Departments\n";
                 echo "2. Courses\n";
